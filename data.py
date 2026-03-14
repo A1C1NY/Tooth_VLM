@@ -34,7 +34,7 @@ transform = T.Compose([
 ])
 
 paths = []
-# 遍历目录及其子目录（如果是为了只扫描当前目录，os.listdir已经足够）
+# 遍历目录及其子目录
 if not os.path.exists(input_dir):
     print(f"Directory {input_dir} does not exist.")
     exit()
@@ -47,7 +47,7 @@ if len(paths) == 0:
     print(f"No images found in {input_dir}")
     exit()
 
-# features 提取（对每张图生成若干旋转/镜像变体以提高对旋转/镜像的鲁棒性）
+# features 提取（对每张图生成若干旋转/镜像变体）
 def get_variants(img):
     variants = []
     for angle in (0, 90, 180, 270):
@@ -119,10 +119,9 @@ if os.path.exists(output_dir):
         shutil.rmtree(output_dir)
     except Exception as e:
         print(f"Warning: Could not remove directory {output_dir}: {e}")
-        # 如果无法删除，可能是有文件正在被使用，但通常不应该影响脚本核心逻辑
         pass # 继续尝试重建
 
-os.makedirs(output_dir, exist_ok=True) # exist_ok=True 避免文件夹已删除失败再次创建时报错
+os.makedirs(output_dir, exist_ok=True) #  避免文件夹已删除失败再次创建时报错
 
 # 将只有 1 张图的簇集中到一个文件夹中
 result = os.path.join(output_dir, 'single_images')
@@ -151,7 +150,7 @@ for root, group in clusters.items():
             dest_path = os.path.join(result, f"{name}_{root}{ext}")
 
         shutil.copy2(selected, dest_path)
-        # 记录日志项（仅保存文件名以便可读）
+        # 记录日志项
         group_basenames = [os.path.basename(p) for p in group]
         duplicates_log.append({
             'cluster': root,
