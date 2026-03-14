@@ -1,0 +1,22 @@
+# Ignore common image files anywhere
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.bmp
+*.tif
+*.tiff
+*.webp
+
+# Also ignore common vector/icon formats
+*.svg
+*.ico
+
+# Ignore any folder named "images" anywhere
+**/images/
+
+# Ignore output folders often used for processed images
+output/
+
+# Keep this file tracked
+!.gitignore
